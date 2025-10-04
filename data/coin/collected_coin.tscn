@@ -1,0 +1,72 @@
+[gd_scene load_steps=9 format=3 uid="uid://xk3ucchy6c2m"]
+
+[ext_resource type="Script" uid="uid://d2rbp82d21n4n" path="res://data/coin/collected_coin.gd" id="1_2ijd1"]
+[ext_resource type="Texture2D" uid="uid://daq3ngjf35n7p" path="res://assets/textures/tilemap_packed.png" id="2_rf74s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dw4on"]
+atlas = ExtResource("2_rf74s")
+region = Rect2(256, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aetdu"]
+atlas = ExtResource("2_rf74s")
+region = Rect2(256, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0xfpm"]
+atlas = ExtResource("2_rf74s")
+region = Rect2(240, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pjxej"]
+atlas = ExtResource("2_rf74s")
+region = Rect2(224, 112, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bax07"]
+atlas = ExtResource("2_rf74s")
+region = Rect2(224, 112, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_0cbko"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dw4on")
+}],
+"loop": true,
+"name": &"chest_none",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aetdu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0xfpm")
+}, {
+"duration": 4.0,
+"texture": SubResource("AtlasTexture_pjxej")
+}],
+"loop": true,
+"name": &"chest_open",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bax07")
+}],
+"loop": true,
+"name": &"chest_opened",
+"speed": 5.0
+}]
+
+[node name="CollectedCoin" type="Node2D"]
+script = ExtResource("1_2ijd1")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_0cbko")
+animation = &"chest_open"
+frame_progress = 0.5569291
+
+[node name="VanishTimer" type="Timer" parent="."]
+wait_time = 0.367
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="VanishTimer" to="." method="_on_vanish_timer_timeout"]

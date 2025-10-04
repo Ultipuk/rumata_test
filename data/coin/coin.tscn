@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cnnwss4bjrpl7"]
+
+[ext_resource type="Script" uid="uid://eyso60xfjepe" path="res://data/coin/coin.gd" id="1_q5a6o"]
+[ext_resource type="Texture2D" uid="uid://daq3ngjf35n7p" path="res://assets/textures/tilemap_packed.png" id="2_teby3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_q5a6o"]
+radius = 8.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_teby3"]
+atlas = ExtResource("2_teby3")
+region = Rect2(256, 112, 16, 16)
+
+[node name="Coin" type="Node2D" groups=["Persistance"]]
+script = ExtResource("1_q5a6o")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_q5a6o")
+debug_color = Color(0.9411765, 0.8039216, 0.3372549, 0.30980393)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("AtlasTexture_teby3")

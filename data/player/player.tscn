@@ -1,0 +1,90 @@
+[gd_scene load_steps=15 format=3 uid="uid://7458wy58e7e5"]
+
+[ext_resource type="Script" uid="uid://cxbd62jmanf5p" path="res://data/player/player.gd" id="1_secdj"]
+[ext_resource type="Resource" uid="uid://85wkarvp7t5v" path="res://configs/player_default_config.tres" id="2_cxlcq"]
+[ext_resource type="Script" uid="uid://dh715olf35qk7" path="res://data/player/player_input_gatherer.gd" id="2_kadrj"]
+[ext_resource type="Script" uid="uid://b5k8sbsic4moj" path="res://data/player/move/move_fsm.gd" id="3_253sb"]
+[ext_resource type="Script" uid="uid://bei7rlloty5he" path="res://data/player/move/idle.gd" id="4_plbdw"]
+[ext_resource type="PackedScene" uid="uid://d6vbvytex7fw" path="res://data/hurtbox/hurtbox.tscn" id="5_gt7j7"]
+[ext_resource type="Script" uid="uid://bl8i1k4ijsubm" path="res://data/player/move/walk.gd" id="5_plbdw"]
+[ext_resource type="Script" uid="uid://d0brvi2vp1fj0" path="res://data/player/move/dash.gd" id="6_plbdw"]
+[ext_resource type="Script" uid="uid://dctgxq8ws5u8k" path="res://data/player/move/stopping.gd" id="7_o58jl"]
+[ext_resource type="Texture2D" uid="uid://daq3ngjf35n7p" path="res://assets/textures/tilemap_packed.png" id="12_ycsl2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gt7j7"]
+atlas = ExtResource("12_ycsl2")
+region = Rect2(240, 80, 32, 16)
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mtagk"]
+height = 34.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cgp3m"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_secdj"]
+radius = 4.0
+
+[node name="Player" type="CharacterBody2D" groups=["Persistance"]]
+collision_layer = 2
+script = ExtResource("1_secdj")
+config = ExtResource("2_cxlcq")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+texture_filter = 1
+texture_repeat = 1
+texture = SubResource("AtlasTexture_gt7j7")
+
+[node name="PlayerInputGatherer" type="Node" parent="."]
+script = ExtResource("2_kadrj")
+metadata/_custom_type_script = "uid://dh715olf35qk7"
+
+[node name="CoinPickArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CoinPickArea"]
+rotation = 1.5707964
+shape = SubResource("CapsuleShape2D_mtagk")
+debug_color = Color(0.7176471, 0.6039216, 0.18039216, 0.13725491)
+
+[node name="Hurtbox" parent="." instance=ExtResource("5_gt7j7")]
+
+[node name="Collider" type="CollisionShape2D" parent="Hurtbox"]
+shape = SubResource("CircleShape2D_cgp3m")
+debug_color = Color(0.9034765, 0.29850054, 0.19936162, 0.41960785)
+
+[node name="Collider" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_secdj")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="PlayerMoveFSM" type="Node" parent="." node_paths=PackedStringArray("init_state")]
+script = ExtResource("3_253sb")
+init_state = NodePath("Idle")
+metadata/_custom_type_script = "uid://b5k8sbsic4moj"
+
+[node name="Idle" type="Node" parent="PlayerMoveFSM"]
+script = ExtResource("4_plbdw")
+metadata/_custom_type_script = "uid://c5mgufpwyj2rk"
+
+[node name="Walk" type="Node" parent="PlayerMoveFSM"]
+script = ExtResource("5_plbdw")
+metadata/_custom_type_script = "uid://c5mgufpwyj2rk"
+
+[node name="Stopping" type="Node" parent="PlayerMoveFSM"]
+script = ExtResource("7_o58jl")
+metadata/_custom_type_script = "uid://c5mgufpwyj2rk"
+
+[node name="Dash" type="Node" parent="PlayerMoveFSM"]
+script = ExtResource("6_plbdw")
+metadata/_custom_type_script = "uid://c5mgufpwyj2rk"
+
+[node name="DashRecoveryTimer" type="Timer" parent="PlayerMoveFSM/Dash"]
+process_callback = 0
+
+[connection signal="area_entered" from="CoinPickArea" to="." method="_on_coin_pick_area_area_entered"]
+[connection signal="hitted" from="Hurtbox" to="." method="_on_hurtbox_hitted"]
+[connection signal="timeout" from="PlayerMoveFSM/Dash/DashRecoveryTimer" to="PlayerMoveFSM/Dash" method="_on_dash_recovery_timer_timeout"]

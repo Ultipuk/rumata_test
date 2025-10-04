@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="FoeConfig" load_steps=2 format=3 uid="uid://b0xw4ttb1eiiw"]
+
+[ext_resource type="Script" uid="uid://cdw3rfqhu1taw" path="res://data/foe/foe_config.gd" id="1_x1fc0"]
+
+[resource]
+script = ExtResource("1_x1fc0")
+dash_speed_min = 90.0
+dash_speed_max = 140.0
+dash_recover_time_min = 0.6
+dash_recover_time_max = 1.4
+metadata/_custom_type_script = "uid://cdw3rfqhu1taw"

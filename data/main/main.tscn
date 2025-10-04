@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://cjy5tehlxm34a"]
+
+[ext_resource type="Script" uid="uid://bse0iy3ek0io0" path="res://data/main/main.gd" id="1_8lgkc"]
+[ext_resource type="PackedScene" uid="uid://f2n7k025ony" path="res://data/hud/hud.tscn" id="4_vyoal"]
+[ext_resource type="PackedScene" uid="uid://b5mscs5opxfyv" path="res://data/gui/gui.tscn" id="5_uorgs"]
+[ext_resource type="PackedScene" uid="uid://iyq8cphnr382" path="res://data/level/level.tscn" id="7_soelf"]
+
+[node name="Main" type="Node"]
+process_mode = 3
+script = ExtResource("1_8lgkc")
+
+[node name="Game" type="Node" parent="."]
+process_mode = 1
+
+[node name="Level" parent="Game" instance=ExtResource("7_soelf")]
+
+[node name="HUD" parent="Game" instance=ExtResource("4_vyoal")]
+
+[node name="GUI" parent="." instance=ExtResource("5_uorgs")]
+
+[connection signal="exit_wanted" from="GUI" to="." method="_on_gui_exit_wanted"]
+[connection signal="load_wanted" from="GUI" to="." method="_on_gui_load_wanted"]
+[connection signal="new_game_wanted" from="GUI" to="." method="_on_gui_new_game_wanted"]
+[connection signal="pause_wanted" from="GUI" to="." method="_on_gui_pause_wanted"]
+[connection signal="resume_wanted" from="GUI" to="." method="_on_gui_resume_wanted"]
+[connection signal="save_wanted" from="GUI" to="." method="_on_gui_save_wanted"]
