@@ -13,6 +13,17 @@ The levels are generated randomly.
 - WASD to move. It's the boat, so the movement has some inertia.
 - Space to dash. Dash moves you along your current velocity direction, but with a constant speed.
 
+## Level Generation
+
+The level generation algorithm
+1. takes the rectangular field splitted in chunks,
+2. then selects a random point in every chunk,
+3. then build a graph with [Delaunay triangulation](https://en.wikipedia.org/wiki/Delaunay_triangulation),
+4. then builds a [Minimum Spanning Tree](https://www.w3schools.com/dsa/dsa_theory_mst_minspantree.php) with [Prim's algorithm](https://www.w3schools.com/dsa/dsa_algo_mst_prim.php),
+5. then draws a graph in texture via subviewport,
+6. then populates a tilemap based on pixel's color,
+7. and if the player, coins and foes are needed, spawns them on points, genereted in step 2.
+
 ## Assets
 
 I used Monochrome Pirates texture assets from Kenney: https://www.kenney.nl/assets/monochrome-pirates
