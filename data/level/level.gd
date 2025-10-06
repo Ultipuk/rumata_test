@@ -1,5 +1,10 @@
 extends Node2D
-class_name LevelGenerator
+class_name Level
+
+## The [Level] class is responsible for procedurally generating game levels.
+##
+## It handles the creation of the level layout, placement of player, enemies, and collectibles.
+## It also manages saving and loading of the level state.
 
 const PLAYER = preload("uid://7458wy58e7e5")
 const FOE = preload("uid://2mvtx8vbfdgw")
@@ -49,6 +54,16 @@ func _ready() -> void:
 	)
 
 
+## Serializes the current state of the level into a dictionary.
+## This includes states of summons like [Player]s, [Foe]s and [Coin]s.
+##
+## [b]Important:[/b]
+## The summons must be in the LevelPeristence global group, and they also
+## must have these methods implemented:
+## [codeblock]
+## func save() -> Dictionary: pass
+## func load_from_save(save_data: Dictionary) -> void: pass
+## [/codeblock]
 func save() -> Dictionary:
 	var save_data := {
 		"level_seed": data.level_seed,
@@ -74,6 +89,7 @@ func save() -> Dictionary:
 	return save_data
 
 
+## Restores the level's state from a saved data dictionary.
 func load_from_save(save_data: Dictionary) -> void:
 	data.level_seed = save_data.level_seed
 	data.coins_left = save_data.coins_left
@@ -92,7 +108,7 @@ func load_from_save(save_data: Dictionary) -> void:
 		summon.load_from_save(summon_save_data)
 		summons.add_child(summon)
 
-
+## Creates a new level based on the provided configuration.
 func create(config: LevelConfig) -> void:
 	data.config = config
 	

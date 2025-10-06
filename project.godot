@@ -35,7 +35,7 @@ folder_colors={
 
 [global_group]
 
-LevelPersistance="Nodes that can be saved in save file."
+LevelPersistence="Nodes that can be saved in save file."
 
 [input]
 

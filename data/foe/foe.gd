@@ -1,9 +1,14 @@
 extends CharacterBody2D
 class_name Foe
 
+## Represents an enemy character in the game.
+##
+## This class handles the foe's movement, specifically a "dash" ability,
+## and manages its state for saving and loading. Foes move by dashing
+## in random directions after a variable recovery period.
+
 @onready var dash_timer: Timer = $DashTimer
 @onready var sprite_2d: Sprite2D = $Sprite2D
-
 
 @export var config: FoeConfig
 

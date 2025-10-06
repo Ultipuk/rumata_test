@@ -1,9 +1,15 @@
 extends Node
 class_name Main
 
+## The [Main] class acts as the central controller for the game.
+##
+## It manages the overall game state, including pausing, resuming, starting new games, and handling save/load operations.
+## It serves as the bridge between the user interface ([GUI]) and the core game logic, primarily the [Level].
+
+
 const LEVEL_SMALL_RANDOM_CONFIG = preload("uid://buuxp4kf7sl5o")
 
-@onready var level: LevelGenerator = $Game/Level
+@onready var level: Level = $Game/Level
 
 
 func _ready() -> void:
@@ -17,21 +23,19 @@ func _ready() -> void:
 	)
 
 
-func pause_toggle() -> void:
-	if get_tree().paused: resume()
-	else: pause()
-
-
+## Pause the game.
 func pause() -> void:
 	Events.game_paused.emit()
 	get_tree().paused = true
 
 
+## Resume the game.
 func resume() -> void:
 	Events.game_resumed.emit()
 	get_tree().paused = false
 
 
+## Saves the current state of the game.
 func save_game() -> void:
 	var save_file := FileAccess.open("user://savegame.save", FileAccess.WRITE)
 	
@@ -42,6 +46,7 @@ func save_game() -> void:
 	save_file.store_string(json_string)
 
 
+## Loads a saved game state from the save file.
 func load_game() -> void:
 	if not FileAccess.file_exists("user://savegame.save"):
 		return

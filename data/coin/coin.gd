@@ -1,6 +1,13 @@
 extends Node2D
 class_name Coin
 
+## Represents a collectible coin in the game.
+##
+## This node is a simple collectible item. It primarily handles its own
+## collection logic, which involves spawning a "collected" effect and then
+## removing itself from the game. It also includes methods for saving and
+## loading its position to persist across game sessions.
+
 const COLLECTED_COIN = preload("uid://xk3ucchy6c2m")
 
 

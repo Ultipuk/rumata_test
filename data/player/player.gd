@@ -1,6 +1,12 @@
 extends CharacterBody2D
 class_name Player
 
+## The [Player] class represents the player character.
+##
+## This class manages the player's state, input, movement, and interactions
+## with the game world, such as collecting coins or getting hit. It uses a Finite
+## State Machine (FSM) to handle different movement states (e.g., idle, moving, dashing).
+## It also includes functionality for saving and loading its state.
 
 @onready var player_input_gatherer: PlayerInputGatherer = $PlayerInputGatherer
 @onready var player_move_fsm: PlayerMoveFSM = $PlayerMoveFSM
@@ -25,14 +31,19 @@ func _physics_process(delta: float) -> void:
 	player_move_fsm.update(input, delta)
 
 
+## Applies the player's velocity to move the character.
+## This is intended to be called by the state machine's states.
 func move() -> void:
 	move_and_slide()
 
 
+## Checks if the player is currently able to perform a dash.
+## @returns: [code]true[/code] if the dash is recovered, otherwise [code]false[/code].
 func can_dash() -> bool:
 	return data.dash_recovered
 
 
+## Serializes the current state of the player into a dictionary.
 func save() -> Dictionary:
 	return {
 		"type": "Player",
@@ -55,6 +66,7 @@ func save() -> Dictionary:
 	}
 
 
+## Restores the level's state from a saved data dictionary.
 func load_from_save(save_data: Dictionary) -> void:
 	position = Vector2(save_data["pos_x"], save_data["pos_y"])
 	velocity = Vector2(save_data["vel_x"], save_data["vel_y"])
