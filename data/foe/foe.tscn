@@ -24,7 +24,7 @@ fill_from = Vector2(0.5, 0.5)
 atlas = ExtResource("3_gvw8u")
 region = Rect2(16, 112, 16, 16)
 
-[node name="Foe" type="CharacterBody2D" groups=["Persistance"]]
+[node name="Foe" type="CharacterBody2D" groups=["LevelPersistance"]]
 collision_layer = 32
 script = ExtResource("1_vwmkc")
 config = ExtResource("2_vmlg1")

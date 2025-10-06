@@ -10,7 +10,7 @@ radius = 8.0
 atlas = ExtResource("2_teby3")
 region = Rect2(256, 112, 16, 16)
 
-[node name="Coin" type="Node2D" groups=["Persistance"]]
+[node name="Coin" type="Node2D" groups=["LevelPersistance"]]
 script = ExtResource("1_q5a6o")
 
 [node name="Area2D" type="Area2D" parent="."]
