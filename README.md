@@ -10,7 +10,7 @@ The levels are generated randomly.
 
 ### Controls
 
-- WASD to move. It's the boat, so the movement has some inertia.
+- WASD to move. It's a boat, so the movement has some inertia.
 - Space to dash. Dash moves you along your current velocity direction, but with a constant speed.
 
 ## Level Generation
