@@ -74,7 +74,7 @@ func save() -> Dictionary:
 	var summons_save_data: Array[Dictionary] = []
 	
 	for summon in summons.get_children():
-		if not summon.is_in_group(&"LevelPersistance"):
+		if not summon.is_in_group(&"LevelPersistence"):
 			continue
 		
 		if !summon.has_method("save"):
