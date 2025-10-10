@@ -70,6 +70,10 @@ dash={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [layer_names]
 
 2d_physics/layer_1="Terrain"
@@ -78,3 +82,7 @@ dash={
 2d_physics/layer_4="Hurtbox"
 2d_physics/layer_5="Coin"
 2d_physics/layer_6="Foe"
+
+[rendering]
+
+textures/vram_compression/import_etc2_astc=true
